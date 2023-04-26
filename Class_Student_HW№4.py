@@ -23,14 +23,19 @@ class Student:
             return 0
 
     def __str__(self):
-        return f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.mean_student_grade()}\nКурсы в процессе изучения: {', '.join(self.courses_in_progress)}\nЗавершенные курсы: {', '.join(self.finished_courses)}"
+        return f"Имя: {self.name}\n" \
+               f"Фамилия: {self.surname}\n" \
+               f"Средняя оценка за домашние задания: {self.mean_student_grade()}\n" \
+               f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n" \
+               f"Завершенные курсы: {', '.join(self.finished_courses)}"
 
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)
 
     def rate_lectures(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached \
-                and (course in self.courses_in_progress or course in self.finished_courses) and 0 <= grade <= 10:
+                and (course in self.courses_in_progress or course in self.finished_courses) \
+                and 0 <= grade <= 10:
             lecturer.lect_grades.setdefault(course, []).append(grade)
         else:
             return 'Ошибка'
@@ -65,7 +70,9 @@ class Lecturer(Mentor):
             return 0
 
     def __str__(self):
-        return f"Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.mean_lect_grade()}"
+        return f"Имя: {self.name}\n" \
+               f"Фамилия: {self.surname}\n" \
+               f"Средняя оценка за лекции: {self.mean_lect_grade()}"
 
     def __eq__(self, other):
         return self.mean_lect_grade() == other.mean_lect_grade()
