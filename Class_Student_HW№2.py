@@ -12,7 +12,7 @@ class Student:
 
     def rate_lectures(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached \
-                and self.courses_in_progress and 0 <= grade <= 10:
+                and (course in self.courses_in_progress or course in self.finished_courses) and 0 <= grade <= 10:
             lecturer.lect_grades.setdefault(course, []).append(grade)
         else:
             return 'Ошибка'
