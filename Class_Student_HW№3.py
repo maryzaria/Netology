@@ -11,7 +11,7 @@ class Student:
         self.courses_in_progress = []
         self.grades = {}
 
-    def mean_grade(self):
+    def _mean_student_grade(self):
         # случай, когда у студента есть оценки за ДЗ
         try:
             mean_grade = 0
@@ -25,7 +25,7 @@ class Student:
     def __str__(self):
         return f"Имя: {self.name}\n" \
                f"Фамилия: {self.surname}\n" \
-               f"Средняя оценка за домашние задания: {self.mean_grade()}\n" \
+               f"Средняя оценка за домашние задания: {self._mean_student_grade()}\n" \
                f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n" \
                f"Завершенные курсы: {', '.join(self.finished_courses)}"
 
@@ -41,10 +41,16 @@ class Student:
             return 'Ошибка'
 
     def __eq__(self, other):
-        return self.mean_grade() == other.mean_grade()
+        try:
+            return self._mean_student_grade() == other._mean_student_grade()
+        except AttributeError:
+            return 'кто-то не является студентом'
 
     def __gt__(self, other):
-        return self.mean_grade() > other.mean_grade()
+        try:
+            return self._mean_student_grade() > other._mean_student_grade()
+        except AttributeError:
+            return 'кто-то не является студентом'
 
 
 class Mentor:
@@ -60,7 +66,7 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.lect_grades = {}
 
-    def mean_lect_grade(self):
+    def _mean_lect_grade(self):
         try:
             mean_grade = 0
             for values in self.lect_grades.values():
@@ -72,13 +78,19 @@ class Lecturer(Mentor):
     def __str__(self):
         return f"Имя: {self.name} \n" \
                f"Фамилия: {self.surname} \n" \
-               f"Средняя оценка за лекции: {self.mean_lect_grade()}"
+               f"Средняя оценка за лекции: {self._mean_lect_grade()}"
 
     def __eq__(self, other):
-        return self.mean_lect_grade() == other.mean_lect_grade()
+        try:
+            return self._mean_lect_grade() == other._mean_lect_grade()
+        except AttributeError:
+            return 'кто-то не является лектором'
 
     def __gt__(self, other):
-        return self.mean_lect_grade() > other.mean_lect_grade()
+        try:
+            return self._mean_lect_grade() > other._mean_lect_grade()
+        except AttributeError:
+            return 'кто-то не является лектором'
 
 
 class Reviewer(Mentor):
