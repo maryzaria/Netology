@@ -24,7 +24,8 @@ class YaUploader:
         try:
             for filename in file_list:
                 href = self._get_link_to_upload(file_path + filename)
-                requests.put(href, data=open(filename, 'rb'))
+                with open(filename, 'rb') as file:
+                    requests.put(href, data=file)
             print('Successful upload for all files')
         except Exception as e:
             print(f'Error: {e}')
