@@ -58,7 +58,7 @@ class StackOverflowParse:
         self.request_from_questions()
         if self.result:
             return '\n'.join([' '.join([k, v]) for res in sorted(self.result, key=lambda x: x['Creation date:']) for k, v in res.items()])
-        return f"No requests found for the last {self.days} days with the tag 'Python'"
+        return f"No requests found for the last {self.days} days with the tags {', '.join(self.tags)}"
 
 
 if __name__ == '__main__':
