@@ -1,11 +1,13 @@
+import os
 from pprint import pprint
-from datetime import datetime
 import requests
+from dotenv import load_dotenv
 
 from ya_disk import YandexDisk
 
+load_dotenv()
 
-TOKEN = 'y0_AgAAAAAWWe1CAADLWwAAAADjA8alpSHM4m94SgCvFVDVU-XtWXPzyoY'
+TOKEN = os.getenv('TOKEN')
 
 
 def test_request():
