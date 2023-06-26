@@ -1,6 +1,6 @@
-create table if not exists Sotrudnik (
-id serial primary key,
-FIO varchar(100) unique not null,
-department varchar(40) not null,
-boss_id integer
+CREATE TABLE IF NOT EXISTS Sotrudnik (
+id SERIAL PRIMARY KEY,
+name VARCHAR(40) UNIQUE NOT NULL,
+department VARCHAR(40) UNIQUE NOT NULL,
+boss_id INTEGER REFERENCES Sotrudnik(id) 
 );

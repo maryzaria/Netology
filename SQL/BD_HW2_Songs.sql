@@ -1,47 +1,47 @@
-create table if not exists Singers (
-singer_id SERIAL primary key,
-singer_name VARCHAR(40) unique not null
+CREATE TABLE IF NOT EXISTS Singer (
+singer_id SERIAL PRIMARY key,
+singer_name VARCHAR(40) UNIQUE NOT NULL
 );
 
-create table if not exists Albums (
-album_id SERIAL primary key,
-album_name VARCHAR(40) unique not null,
-album_year interval year not null
+CREATE TABLE IF NOT EXISTS Album (
+album_id SERIAL PRIMARY KEY,
+album_name VARCHAR(40) UNIQUE NOT NULL,
+album_year INTERVAL YEAR NOT NULL CHECK (album_year > 1900)
 );
 
-create table if not exists SingerAlbum (
-singer_id INTEGER references Singers(singer_id),
-album_id INTEGER references Albums(album_id),
-constraint pk1 primary key (singer_id, album_id)
+CREATE TABLE IF NOT EXISTS SingerAlbum (
+singer_id INTEGER REFERENCES Singer(singer_id),
+album_id INTEGER REFERENCES Album(album_id),
+CONSTRAINT pk1 PRIMARY KEY (singer_id, album_id)
 );
 
-create table if not exists Genres (
-genre_id SERIAL primary key,
-genre_name VARCHAR(40) unique not null,
-description text not null
+CREATE TABLE IF NOT EXISTS Genre (
+genre_id SERIAL PRIMARY KEY, 
+name VARCHAR(40) UNIQUE NOT NULL,
+description TEXT NOT NULL
 );
 
-create table if not exists SingerGenre (
-singer_id integer references Singers(singer_id),
-genre_id integer references Genres(genre_id),
-constraint pk2 primary key (singer_id, genre_id)
+CREATE TABLE IF NOT EXISTS SingerGenre (
+singer_id integer REFERENCES Singer(singer_id),
+genre_id integer REFERENCES Genre(genre_id),
+CONSTRAINT pk2 PRIMARY KEY (singer_id, genre_id)
 );
 
-create table if not exists Songs (
-song_id SERIAL primary key,
-song_name VARCHAR(20) unique not null,
-duration interval second not null,
-album_id INTEGER references Albums(album_id)
+CREATE TABLE IF NOT EXISTS Song (
+song_id SERIAL PRIMARY KEY,
+song_name VARCHAR(20) UNIQUE NOT NULL,
+duration INTEGER NOT NULL CHECK (duration > 180),
+album_id INTEGER REFERENCES Album(album_id)
 );
 
-create table if not exists Digests (
-digest_id SERIAL primary key,
-digest_name VARCHAR(20) unique not null,
-digest_year interval year not null
+CREATE TABLE IF NOT EXISTS Digest (
+digest_id SERIAL PRIMARY KEY,
+digest_name VARCHAR(20) UNIQUE NOT NULL,
+digest_year INTERVAL YEAR NOT NULL
 );
 
-create table if not exists SongDigest (
-song_id integer references Songs(song_id),
-digest_id integer references Digests(digest_id),
-constraint pk3 primary key (song_id, digest_id)
+CREATE TABLE IF NOT EXISTS SongDigest (
+song_id INTEGER REFERENCES Song(song_id),
+digest_id INTEGER REFERENCES Digest(digest_id),
+CONSTRAINT pk3 PRIMARY KEY (song_id, digest_id)
 );
