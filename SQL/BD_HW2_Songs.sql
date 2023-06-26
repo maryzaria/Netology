@@ -37,7 +37,7 @@ album_id INTEGER REFERENCES Album(album_id)
 CREATE TABLE IF NOT EXISTS Digest (
 digest_id SERIAL PRIMARY KEY,
 digest_name VARCHAR(20) UNIQUE NOT NULL,
-digest_year INTERVAL YEAR NOT NULL
+digest_year INTERVAL YEAR NOT NULL CHECK (digest_year > 1900)
 );
 
 CREATE TABLE IF NOT EXISTS SongDigest (
