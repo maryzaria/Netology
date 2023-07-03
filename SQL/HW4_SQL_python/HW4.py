@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import psycopg2
 
 
-def create_db(connect) -> None:
+def create_db(connect):
     with connect.cursor() as cur:
         cur.execute("""
         DROP TABLE telephone;
@@ -27,7 +27,7 @@ def create_db(connect) -> None:
         connect.commit()
 
 
-def add_client(connect, first_name: str, last_name: str, email: str, phones=None):
+def add_client(connect, first_name, last_name, email, phones=None):
     with connect.cursor() as cur:
         cur.execute("""
         INSERT INTO client (first_name, last_name, email) VALUES (%s, %s, %s) RETURNING client_id;
@@ -57,15 +57,15 @@ def change_client(connect, client_id, first_name=None, last_name=None, email=Non
             cur.execute("""
             UPDATE client SET first_name=%s WHERE client_id=%S;
             """, (first_name, client_id))
-        elif last_name is not None:
+        if last_name is not None:
             cur.execute("""
             UPDATE client SET last_name=%s WHERE client_id=%S;
             """, (last_name, client_id))
-        elif email is not None:
+        if email is not None:
             cur.execute("""
             UPDATE client SET email=%s WHERE client_id=%S;
             """, (email, client_id))
-        elif phone is not None:
+        if phone is not None:
             cur.execute("""
             SELECT number FROM telephone
             WHERE client_id=%s;
@@ -87,8 +87,9 @@ def delete_phone(connect, client_id, phone):
 def delete_client(connect, client_id):
     with connect.cursor() as cur:
         cur.execute("""
+        DELETE FROM telephone WHERE client_id=%s;
         DELETE FROM client WHERE client_id=%s;
-        """, (client_id,))
+        """, (client_id, client_id))
     connect.commit()
 
 
@@ -126,7 +127,7 @@ if __name__ == '__main__':
     print(find_client(conn, phone='261029'))
     print(find_client(conn, 'Мария'))
     print(find_client(conn, phone='5555555'))
-    delete_client(conn, 4)
+    delete_client(conn, 1)
     print(find_client(conn, 'Мария'))
     conn.close()
 
