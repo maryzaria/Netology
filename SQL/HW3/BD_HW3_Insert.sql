@@ -50,8 +50,6 @@ INSERT INTO singeralbum (singer_id, album_id) VALUES (4, 5);
 INSERT INTO singeralbum (singer_id, album_id) VALUES (5, 6);
 INSERT INTO singeralbum (singer_id, album_id) VALUES (3, 7);
 
-
-
 INSERT INTO digest (digest_name, digest_year) VALUES ('Лучшие песни 80-х', 2000);
 INSERT INTO digest (digest_name, digest_year) VALUES ('Нестареющая классика', 2010);
 INSERT INTO digest (digest_name, digest_year) VALUES ('Хиты на все времена', 2020);
@@ -64,7 +62,22 @@ INSERT INTO songdigest (song_id, digest_id) VALUES (3, 2);
 INSERT INTO songdigest (song_id, digest_id) VALUES (4, 2);
 INSERT INTO songdigest (song_id, digest_id) VALUES (5, 2);
 INSERT INTO songdigest (song_id, digest_id) VALUES (2, 3);
-INSERT INTO songdigest (song_id, digest_id) VALUES (4, 2);
 INSERT INTO songdigest (song_id, digest_id) VALUES (6, 3);
 INSERT INTO songdigest (song_id, digest_id) VALUES (3, 3);
 INSERT INTO songdigest (song_id, digest_id) VALUES (1, 3);
+
+INSERT INTO album (album_name, album_year) VALUES ('My time', 2023);
+INSERT INTO song (song_name, duration, album_id) VALUES ('my own', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('own my', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('oh my god', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('my', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('myself', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('by myself', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('bemy self', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('myself by', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('beemy', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('premyne', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('мой', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('мойка', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('ты мой свет', 200, 8);
+INSERT INTO song (song_name, duration, album_id) VALUES ('привет, мойдодыр', 200, 8);
