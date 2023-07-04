@@ -35,7 +35,7 @@ def add_client(cur, first_name, last_name, email, phones=None):
             for phone in phones:
                 add_phone(cur, client_id, phone)
         elif isinstance(phones, (str, int)):
-            add_phone(cur, client_id, phones)
+            add_phone(cur, client_id, str(phones))
 
 
 def add_phone(cur, client_id, phone_number):
@@ -100,6 +100,7 @@ def find_client(cur, first_name=None, last_name=None, email=None, phone=None):
 if __name__ == '__main__':
     load_dotenv()
     user_password = os.getenv('USER_PASSWORD')
+    # перед созданием подключения необходимо создать БД createdb -U postgres clients_db
     with psycopg2.connect(database='clients_db', user='postgres', password=user_password) as conn:
         with conn.cursor() as cursor:
             create_db(cursor)
