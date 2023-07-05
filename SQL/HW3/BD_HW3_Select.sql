@@ -21,8 +21,7 @@ WHERE song_name ~* '\mmy\M'
 OR song_name ~* '\mмой\M';
 
 SELECT song_name FROM song
-WHERE string_to_array(lower(song_name), ' ') && 
-ARRAY['my %', '% my', '% my %', 'my', 'мой %', '% мой', '% мой %', 'мой'];
+WHERE string_to_array(lower(song_name), ' ') && ARRAY['my', 'мой'];
 
 -- Количество исполнителей в каждом жанре
 SELECT name, COUNT(s.singer_id) count FROM genre g
