@@ -27,6 +27,13 @@ def load_data_to_db(session, filename):
     session.commit()
 
 
+def num_of_spaces(query):
+    max_title = len(max(query, key=lambda x: len(x[0].title))[0].title)
+    max_shop = len(max(query, key=lambda x: len(x[1].name))[1].name)
+    max_price = len(str(max(query, key=lambda x: len(str(x[2].price)))[2].price))
+    return max_title, max_shop, max_price
+
+
 if __name__ == '__main__':
     load_dotenv()
     db = os.getenv('DB')
@@ -49,15 +56,14 @@ if __name__ == '__main__':
     except ValueError:
         publisher_id = -1
 
-    query = session.query(Book, Stock, Sale, Shop).\
+    query = session.query(Book, Shop, Sale).\
         select_from(Publisher).join(Book).join(Stock).join(Sale).join(Shop).\
         filter(or_(Publisher.id == publisher_id, Publisher.name.like(f'{publisher}'))).all()
 
-    max_title = len(max(query, key=lambda x: len(x[0].title))[0].title)
-    max_shop = len(max(query, key=lambda x: len(x[3].name))[3].name)
+    t, s, p = num_of_spaces(query)
 
-    for book, stock, sale, shop in query:
-        print(f'{book.title.ljust(max_title, " ")} | {shop.name.ljust(max_shop, " ")} | {str(sale.price).ljust(5, " ")} | {sale.date_sale}')
+    for book, shop, sale in query:
+        print(f'{book.title.ljust(t, " ")} | {shop.name.ljust(s, " ")} | {str(sale.price).ljust(p, " ")} | {sale.date_sale}')
 
     session.commit()
     session.close()
