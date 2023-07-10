@@ -1,5 +1,7 @@
+*.env
 .idea/
 working_with_files/.idea/ 
 working_with_files/__pycache__/
-SQL/HW4_SQL_python/.env
 SQL/HW4_SQL_python/.idea/
+SQL/HW4_SQL_python/.env
+SQL/HW5_ORM/.env
