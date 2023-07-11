@@ -1,11 +1,22 @@
-import os
 import json
-from dotenv import load_dotenv
-import sqlalchemy as sq
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import or_
+import os
 
-from HW5_sqlalchemy_models import *
+from dotenv import load_dotenv
+from sqlalchemy import or_, create_engine
+from sqlalchemy.orm import sessionmaker
+
+from models import *
+
+load_dotenv()
+db = os.getenv('DB')
+user_name = os.getenv('USER_NAME')
+user_password = os.getenv('USER_PASSWORD')
+host = 'localhost:5432'
+db_name = 'booksale_db'
+DSN = f'{db}://{user_name}:{user_password}@{host}/{db_name}'
+engine = create_engine(DSN)
+create_table(engine)
+Session = sessionmaker(bind=engine)
 
 
 def load_data_to_db(session, filename):
@@ -34,36 +45,31 @@ def num_of_spaces(query):
     return max_title, max_shop, max_price
 
 
-if __name__ == '__main__':
-    load_dotenv()
-    db = os.getenv('DB')
-    user_name = os.getenv('USER_NAME')
-    user_password = os.getenv('USER_PASSWORD')
-    host = 'localhost:5432'
-    db_name = 'booksale_db'
-    DSN = f'{db}://{user_name}:{user_password}@{host}/{db_name}'
-    engine = sq.create_engine(DSN)
-    create_table(engine)
-
-    Session = sessionmaker(bind=engine)
+def main():
     session = Session()
     load_data_to_db(session, 'tests_data.json')
-
     # publisher = 'O’Reilly'
     publisher = input('Введите имя или идентификатор автора: ')
+
     try:
         publisher_id = int(publisher)
     except ValueError:
         publisher_id = -1
 
-    query = session.query(Book, Shop, Sale).\
-        select_from(Publisher).join(Book).join(Stock).join(Sale).join(Shop).\
+    query = session.query(Book, Shop, Sale). \
+        select_from(Publisher).join(Book).join(Stock).join(Sale).join(Shop). \
         filter(or_(Publisher.id == publisher_id, Publisher.name.like(f'{publisher}'))).all()
 
     t, s, p = num_of_spaces(query)
 
     for book, shop, sale in query:
-        print(f'{book.title.ljust(t, " ")} | {shop.name.ljust(s, " ")} | {str(sale.price).ljust(p, " ")} | {sale.date_sale}')
+        print(
+            f'{book.title.ljust(t, " ")} | {shop.name.ljust(s, " ")} | {str(sale.price).ljust(p, " ")} | {sale.date_sale}')
 
     session.commit()
     session.close()
+
+
+if __name__ == '__main__':
+    main()
+

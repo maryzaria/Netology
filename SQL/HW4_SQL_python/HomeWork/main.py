@@ -3,6 +3,10 @@ from dotenv import load_dotenv
 import psycopg2
 
 
+load_dotenv()
+user_password = os.getenv('USER_PASSWORD')
+
+
 def create_db(cur):
     cur.execute("""
     DROP TABLE telephone;
@@ -98,8 +102,6 @@ def find_client(cur, first_name=None, last_name=None, email=None, phone=None):
 
 
 if __name__ == '__main__':
-    load_dotenv()
-    user_password = os.getenv('USER_PASSWORD')
     # перед созданием подключения, необходимо создать БД createdb -U postgres test_db
     with psycopg2.connect(database='clients_db', user='postgres', password=user_password) as conn:
         with conn.cursor() as cursor:
