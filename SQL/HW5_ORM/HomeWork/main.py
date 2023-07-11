@@ -47,7 +47,9 @@ def num_of_spaces(query):
 
 def main():
     session = Session()
-    load_data_to_db(session, 'tests_data.json')
+    if not session.query(Publisher).first():
+        load_data_to_db(session, 'tests_data.json')
+
     # publisher = 'O’Reilly'
     publisher = input('Введите имя или идентификатор автора: ')
 
