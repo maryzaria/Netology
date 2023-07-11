@@ -49,10 +49,8 @@ def main():
     session = Session()
     if not session.query(Publisher).first():
         load_data_to_db(session, 'tests_data.json')
-
     # publisher = 'O’Reilly'
     publisher = input('Введите имя или идентификатор автора: ')
-
     try:
         publisher_id = int(publisher)
     except ValueError:
@@ -61,12 +59,13 @@ def main():
     query = session.query(Book, Shop, Sale). \
         select_from(Publisher).join(Book).join(Stock).join(Sale).join(Shop). \
         filter(or_(Publisher.id == publisher_id, Publisher.name.like(f'{publisher}'))).all()
-
-    t, s, p = num_of_spaces(query)
-
-    for book, shop, sale in query:
-        print(
-            f'{book.title.ljust(t, " ")} | {shop.name.ljust(s, " ")} | {str(sale.price).ljust(p, " ")} | {sale.date_sale}')
+    if query:
+        t, s, p = num_of_spaces(query)
+        for book, shop, sale in query:
+            print(
+                f'{book.title.ljust(t, " ")} | {shop.name.ljust(s, " ")} | {str(sale.price).ljust(p, " ")} | {sale.date_sale}')
+    else:
+        print('Автор не найден')
 
     session.commit()
     session.close()
