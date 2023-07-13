@@ -1,6 +1,0 @@
-.env
-__pycache__/
-.idea/
-my_attempts/
-token.json
-credentials.json
