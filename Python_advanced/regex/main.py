@@ -42,6 +42,7 @@ def main():
     with open("phonebook.csv", "w", newline='') as f:
         fieldnames = 'lastname,firstname,surname,organization,position,phone,email'.split(',')
         datawriter = csv.DictWriter(f, delimiter=',', fieldnames=fieldnames)
+        datawriter.writeheader()
         datawriter.writerows(contacts_list)
 
     # with open("phonebook.csv", "r") as f:
