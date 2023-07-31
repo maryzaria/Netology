@@ -8,7 +8,9 @@ def new_name(lastname, firstname, surname):
 
 
 def new_phone(string):
-    pattern = r'\+?[7-8]\s?[(]?(\d{3})[)]?[ -]?(\d{3})[ -]?(\d{2})[ -]?(\d{2})\s?[(]?(доб.)?\s?(\d{4})?[)]?'
+    pattern = r'\+?[7-8]\s?\(?(\d{3})\)?[\s-]?(\d{3})[\s-]?(\d{2})[\s-]?(\d{2})\s?\(?(доб.)?\s?(\d{4})?\)?'
+    # replace = r"+7(\1)\2-\3-\4"
+    # res2 = re.sub(pattern, replace, string)
     res = re.findall(pattern, string)[0]
     phone = f"+7({res[0]}){res[1]}-{res[2]}-{res[3]}"
     if res[4]:
