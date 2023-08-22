@@ -1,6 +1,6 @@
-'div class="tm-articles-list"'
-"article"
+"""div class="tm-articles-list"""
 """
+"article"
 <h2 class="tm-title tm-title_h2"><a href="/ru/companies/beeline_cloud/articles/751712/" class="tm-title__link" data-test-id="article-snippet-title-link" data-article-link="true"><span>На пороге «нейрозимы» и глобального кризиса — что разработчики систем ИИ думают о будущем технологии</span></a></h2>
 """
 
@@ -18,6 +18,9 @@ from urllib.parse import urljoin
 import fake_headers
 import requests
 from bs4 import BeautifulSoup
+
+# параллелит математические расчеты, но не все однозначно
+from multiprocessing.pool import Pool
 
 headers_gen = fake_headers.Headers(browser="firefox", os="win")
 
@@ -54,6 +57,7 @@ def parse_article_tag(article_tag):
     }
 
 
+# чтобы несколько статей парсились одновременно (параллельно)
 with ThreadPoolExecutor(max_workers=4) as pool:
     results = pool.map(parse_article_tag, article_tags)
     results = tuple(results)

@@ -40,5 +40,7 @@ for article in articles.find_elements(By.TAG_NAME, "article"):
 
 for parsed_article in parsed_articles:
     browser.get(parsed_article["link"])
+    # article = browser.find_element(By.ID, 'post-content-body')
+    # ждем, когда элемент точно прогрузится на странице
     article = wait_element(browser, 1, By.ID, "post-content-body")
     parsed_article["text"] = article.text
