@@ -55,4 +55,4 @@ if __name__ == '__main__':
     recipients_list = ['vasya@email.com', 'petya@email.com']
     email.send_message(message=message_text, subject=subject_text, recipients=recipients_list)
 
-    # email.receive_message(header=None)
+    email.receive_message(header=None)
